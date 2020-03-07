@@ -21,7 +21,6 @@
     </tr>
     </thead>
     <tbody>
-    <!--   for (Todo todo: todos) {  -->
     <% for(Piwo piwo : piwa){ %>
     <tr>
         <td><%=piwo.getNazwa()%></td>

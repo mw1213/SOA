@@ -8,6 +8,26 @@
         <servlet-name>PierwszyServlet</servlet-name>
         <servlet-class>PierwszyServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>loginSite.LoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>WelcomeServlet</servlet-name>
+        <servlet-class>loginSite.WelcomeServlet</servlet-class>
+        <init-param>
+            <param-name>posts</param-name>
+            <param-value>null</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WelcomeServlet</servlet-name>
+        <url-pattern>/procesposts</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PierwszyServlet</servlet-name><url-pattern>/abc</url-pattern>
     </servlet-mapping>

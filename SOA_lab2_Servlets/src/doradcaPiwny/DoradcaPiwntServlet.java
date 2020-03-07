@@ -1,3 +1,5 @@
+package doradcaPiwny;
+
 import doradcaPiwny.BazaPiw;
 
 import javax.servlet.RequestDispatcher;
@@ -8,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "DoradcaPiwntServlet", urlPatterns = "/piwko")
+@WebServlet(name = "doradcaPiwny.DoradcaPiwntServlet", urlPatterns = "/piwko")
 public class DoradcaPiwntServlet extends HttpServlet {
     private BazaPiw bazaPiw = new BazaPiw();
 
