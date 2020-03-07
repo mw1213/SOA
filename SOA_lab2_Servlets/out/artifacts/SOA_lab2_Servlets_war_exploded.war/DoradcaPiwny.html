@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Doradca Piwny</title>
+</head>
+<body>
+    <label > Mam ukończone 18 lat</label>
+    <input type="checkbox" name="wiek" value="True" onclick="enableBtn('button1')">
+    <button id="button1" onclick="enableBtn('button2')" disabled>Submit</button>
+<br>
+<h1>Wybierz kolor piwa, który cię interesuje:</h1><br>
+
+<form action="/piwko" method="get">
+    <select id="kolor" name="kolor">
+        <option value="jasne">jasne</option>
+        <option value="ciemne">ciemne</option>
+        <option value="inne">inne</option>
+    </select>
+    <input id="button2" type="submit" value="Submit" disabled><br>
+</form>
+
+    <script>
+        function disableBtn(button) {
+            document.getElementById(button).disabled = true;
+        }
+
+        function enableBtn(button) {
+            document.getElementById(button).disabled = false;
+        }
+    </script>
+</body>
+</html>
