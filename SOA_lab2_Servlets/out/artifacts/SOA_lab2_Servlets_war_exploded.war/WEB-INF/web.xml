@@ -31,8 +31,8 @@
     <servlet-mapping>
         <servlet-name>PierwszyServlet</servlet-name><url-pattern>/abc</url-pattern>
     </servlet-mapping>
-<!--    <welcome-file-list>-->
+    <welcome-file-list>
 
-<!--        <welcome-file>index.jsp</welcome-file>-->
-<!--    </welcome-file-list>-->
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>

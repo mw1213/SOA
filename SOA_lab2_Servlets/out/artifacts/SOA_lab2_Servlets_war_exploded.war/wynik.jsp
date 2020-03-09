@@ -14,6 +14,9 @@
 </head>
 <body>
 <% List<Piwo> piwa = (List<Piwo>)request.getAttribute("piwa"); %>
+<% if (piwa.isEmpty()){%>
+    Nie znam takich piw :( <br>
+<%} else {%>
 <table border="1" style="width: 50%" height="50%">
     <thead>
     <tr>
@@ -29,6 +32,6 @@
     </tbody>
 
 </table>
-
+<%}%>
 </body>
 </html>

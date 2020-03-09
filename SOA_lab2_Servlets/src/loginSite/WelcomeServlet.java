@@ -12,11 +12,12 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Vector;
 
 @WebServlet(name = "WelcomeServlet", urlPatterns = "/procesposts")
 public class WelcomeServlet extends HttpServlet {
 
-    List<List<String>> posts = new ArrayList<>();
+    Vector<List<String>> posts = new Vector<>();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();

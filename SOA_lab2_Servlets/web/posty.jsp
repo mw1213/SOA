@@ -1,4 +1,5 @@
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Vector" %><%--
   Created by IntelliJ IDEA.
   User: maciej
   Date: 07.03.2020
@@ -21,18 +22,15 @@
     <input type="submit" value="submit">
 </form>
 <% try {%>
-<% List<List<String>> posty = (List<List<String>>)session.getAttribute("posty"); %>
-<table border="1" style="width: 50%" height="50%">
-    <tbody>
+<% Vector<List<String>> posty = (Vector<List<String>>)session.getAttribute("posty"); %>
+
     <% for(List post : posty){ %>
-    <tr>
-        <td><%=post.get(0).toString()%></td>
-        <td><%=post.get(1).toString()%></td>
-        <td><%=post.get(2).toString()%></td>
-    </tr>
+        <%=post.get(0).toString()%>,
+        <b><%=post.get(1).toString()%></b> says <br>
+        <%=post.get(2).toString()%><br>
+
     <%} %>
-    </tbody>
 <%} catch (Exception e){ }%>
-</table>
+
 </body>
 </html>
