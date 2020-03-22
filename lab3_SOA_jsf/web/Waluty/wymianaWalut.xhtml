@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://java.sun.com/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xml:lang="en" lang="en">
+<h:head>
+    <title>Wymiana walut</title>
+</h:head>
+<h:body>
+    <h:form>
+        <p:outputLabel for="z" value="Waluta: " />
+        <p:selectOneMenu id="z" value="#{Wymien.from}">
+            <f:selectItem itemLabel="EUR" itemValue="EUR"/>
+            <f:selectItem itemLabel="CHF" itemValue="CHF"/>
+            <f:selectItem itemLabel="PLN" itemValue="PLN"/>
+            <f:selectItem itemLabel="BAT" itemValue="BAT"/>
+            <f:selectItem itemLabel="THB" itemValue="THB"/>
+            <f:selectItem itemLabel="USD" itemValue="USD"/>
+            <f:selectItem itemLabel="AUD" itemValue="AUD"/>
+            <f:selectItem itemLabel="HKD" itemValue="HKD"/>
+            <f:selectItem itemLabel="CAD" itemValue="CAD"/>
+            <f:selectItem itemLabel="NZD" itemValue="NZD"/>
+            <f:selectItem itemLabel="SGD" itemValue="SGD"/>
+            <f:selectItem itemLabel="HUF" itemValue="HUF"/>
+            <f:selectItem itemLabel="GBP" itemValue="GBP"/>
+            <f:selectItem itemLabel="UAH" itemValue="UAH"/>
+            <f:selectItem itemLabel="JPY" itemValue="JPY"/>
+            <f:selectItem itemLabel="CZK" itemValue="CZK"/>
+            <f:selectItem itemLabel="DKK" itemValue="DKK"/>
+            <f:selectItem itemLabel="ISK" itemValue="ISK"/>
+            <f:selectItem itemLabel="NOK" itemValue="NOK"/>
+            <f:selectItem itemLabel="SEK" itemValue="SEK"/>
+            <f:selectItem itemLabel="HRK" itemValue="HRK"/>
+            <f:selectItem itemLabel="RON" itemValue="RON"/>
+            <f:selectItem itemLabel="BGN" itemValue="BGN"/>
+            <f:selectItem itemLabel="TRY" itemValue="TRY"/>
+            <f:selectItem itemLabel="ILS" itemValue="ILS"/>
+            <f:selectItem itemLabel="CLP" itemValue="CLP"/>
+            <f:selectItem itemLabel="PHP" itemValue="PHP"/>
+            <f:selectItem itemLabel="MXN" itemValue="MXN"/>
+            <f:selectItem itemLabel="ZAR" itemValue="ZAR"/>
+            <f:selectItem itemLabel="BRL" itemValue="BRL"/>
+            <f:selectItem itemLabel="MYR" itemValue="MYR"/>
+            <f:selectItem itemLabel="RUB" itemValue="RUB"/>
+            <f:selectItem itemLabel="IDR" itemValue="IDR"/>
+            <f:selectItem itemLabel="INR" itemValue="INR"/>
+            <f:selectItem itemLabel="KRW" itemValue="KRW"/>
+            <f:selectItem itemLabel="CNY" itemValue="CNY"/>
+            <f:selectItem itemLabel="XDR" itemValue="XDR"/>
+        </p:selectOneMenu><br/>
+
+        <p:outputLabel for="do" value="Waluta: " />
+        <p:selectOneMenu id="do" value="#{Wymien.to}">
+            <f:selectItem itemLabel="EUR" itemValue="EUR"/>
+            <f:selectItem itemLabel="CHF" itemValue="CHF"/>
+            <f:selectItem itemLabel="PLN" itemValue="PLN"/>
+            <f:selectItem itemLabel="BAT" itemValue="BAT"/>
+            <f:selectItem itemLabel="THB" itemValue="THB"/>
+            <f:selectItem itemLabel="USD" itemValue="USD"/>
+            <f:selectItem itemLabel="AUD" itemValue="AUD"/>
+            <f:selectItem itemLabel="HKD" itemValue="HKD"/>
+            <f:selectItem itemLabel="CAD" itemValue="CAD"/>
+            <f:selectItem itemLabel="NZD" itemValue="NZD"/>
+            <f:selectItem itemLabel="SGD" itemValue="SGD"/>
+            <f:selectItem itemLabel="HUF" itemValue="HUF"/>
+            <f:selectItem itemLabel="GBP" itemValue="GBP"/>
+            <f:selectItem itemLabel="UAH" itemValue="UAH"/>
+            <f:selectItem itemLabel="JPY" itemValue="JPY"/>
+            <f:selectItem itemLabel="CZK" itemValue="CZK"/>
+            <f:selectItem itemLabel="DKK" itemValue="DKK"/>
+            <f:selectItem itemLabel="ISK" itemValue="ISK"/>
+            <f:selectItem itemLabel="NOK" itemValue="NOK"/>
+            <f:selectItem itemLabel="SEK" itemValue="SEK"/>
+            <f:selectItem itemLabel="HRK" itemValue="HRK"/>
+            <f:selectItem itemLabel="RON" itemValue="RON"/>
+            <f:selectItem itemLabel="BGN" itemValue="BGN"/>
+            <f:selectItem itemLabel="TRY" itemValue="TRY"/>
+            <f:selectItem itemLabel="ILS" itemValue="ILS"/>
+            <f:selectItem itemLabel="CLP" itemValue="CLP"/>
+            <f:selectItem itemLabel="PHP" itemValue="PHP"/>
+            <f:selectItem itemLabel="MXN" itemValue="MXN"/>
+            <f:selectItem itemLabel="ZAR" itemValue="ZAR"/>
+            <f:selectItem itemLabel="BRL" itemValue="BRL"/>
+            <f:selectItem itemLabel="MYR" itemValue="MYR"/>
+            <f:selectItem itemLabel="RUB" itemValue="RUB"/>
+            <f:selectItem itemLabel="IDR" itemValue="IDR"/>
+            <f:selectItem itemLabel="INR" itemValue="INR"/>
+            <f:selectItem itemLabel="KRW" itemValue="KRW"/>
+            <f:selectItem itemLabel="CNY" itemValue="CNY"/>
+            <f:selectItem itemLabel="XDR" itemValue="XDR"/>
+        </p:selectOneMenu><br/>
+
+        <h:inputText value="#{Wymien.howMuch}"/>
+        <h:commandButton action="#{Wymien.wymien()}" value="przelicz"></h:commandButton>
+        <br/>
+    </h:form>
+</h:body>
+</html>

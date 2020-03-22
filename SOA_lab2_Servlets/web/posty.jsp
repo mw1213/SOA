@@ -16,7 +16,7 @@
     Please enter your username
     <input type="text" name="name"/><br>
     Please enter your email
-    <input type="text" name="email"/><br>
+    <input type="email" name="email"/><br>
     Please enter your message
     <input type="text" name="message"/>
     <input type="submit" value="submit">
