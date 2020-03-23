@@ -1,25 +1,23 @@
-package ksiazki;
-
-import NBPConnector.NBPConnector;
+package bookManagement;
 
 public class Book {
     private String title;
     private String author;
     private String type;
-    private String price;
+    private Double price;
     private String currency;
     private String pages;
-    private String plnPrice;
+    private Double plnPrice;
 
-    public void setPlnPrice(String plnPrice) {
+    public void setPlnPrice(Double plnPrice) {
         this.plnPrice = plnPrice;
     }
 
-    public String getPlnPrice() {
+    public Double getPlnPrice() {
         return plnPrice;
     }
 
-    public Book(String title, String author, String type, String price, String currency, String pages) {
+    public Book(String title, String author, String type, Double price, String currency, String pages) {
         this.title = title;
         this.author = author;
         this.type = type;
@@ -40,7 +38,7 @@ public class Book {
         this.type = type;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -64,7 +62,7 @@ public class Book {
         return type;
     }
 
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 

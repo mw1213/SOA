@@ -1,19 +1,15 @@
-package ksiazki;
+package bookManagement;
 
-
-import NBPConnector.NBPConnector;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 @ManagedBean(name = "Books")
 @SessionScoped
 public class BookSiteBean {
-    static NBPConnector nbpConnector = new NBPConnector();
     static BooksDataSet booksDataSet = new BooksDataSet();
     List<Book> choosenBooks = new ArrayList<>();
     List<String> titles = new ArrayList<>();
@@ -149,12 +145,12 @@ public class BookSiteBean {
                 }
             }
         }
-        String bookPrice;
+        Double bookPrice;
         if(!currencyCheckBox){
             if(priceFromCheckBox){
                 for (Iterator<Book> it = helpset.iterator(); it.hasNext();){
                     bookPrice = it.next().getPrice();
-                    if(!(Double.parseDouble(bookPrice)>=Double.parseDouble(priceFrom))){
+                    if(!(bookPrice>=Double.parseDouble(priceFrom))){
                         it.remove();
                     }
                 }
@@ -162,20 +158,16 @@ public class BookSiteBean {
             if(priceToCheckBox){
                 for (Iterator<Book> it = helpset.iterator(); it.hasNext();){
                     bookPrice = it.next().getPrice();
-                    if(!(Double.parseDouble(bookPrice)<=Double.parseDouble(priceTo))){
+                    if(!(bookPrice<=Double.parseDouble(priceTo))){
                         it.remove();
                     }
                 }
             }
         } else{
-            for (Book book: helpset){
-                Double PLNprice = (nbpConnector.calculate(book.getCurrency(), "PLN", Double.parseDouble(book.getPrice())));
-                book.setPlnPrice(PLNprice.toString());
-            }
             if(priceFromCheckBox){
                 for (Iterator<Book> it = helpset.iterator(); it.hasNext();){
                     bookPrice = it.next().getPlnPrice();
-                    if(!(Double.parseDouble(bookPrice)>=Double.parseDouble(priceFrom))){
+                    if(!(bookPrice>=Double.parseDouble(priceFrom))){
                         it.remove();
                     }
                 }
@@ -183,7 +175,7 @@ public class BookSiteBean {
             if(priceToCheckBox){
                 for (Iterator<Book> it = helpset.iterator(); it.hasNext();){
                     bookPrice = it.next().getPlnPrice();
-                    if(!(Double.parseDouble(bookPrice)<=Double.parseDouble(priceTo))){
+                    if(!(bookPrice<=Double.parseDouble(priceTo))){
                         it.remove();
                     }
                 }

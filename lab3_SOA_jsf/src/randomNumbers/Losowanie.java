@@ -1,4 +1,4 @@
-package losowanie;
+package randomNumbers;
 
 
 import javax.faces.bean.ManagedBean;

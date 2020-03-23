@@ -1,4 +1,4 @@
-package wybierzliczbe;
+package numberPicker;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;

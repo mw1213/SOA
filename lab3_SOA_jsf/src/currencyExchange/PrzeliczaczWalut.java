@@ -1,4 +1,4 @@
-package wymianaWalut;
+package currencyExchange;
 
 import NBPConnector.NBPConnector;
 

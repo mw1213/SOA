@@ -1,4 +1,4 @@
-package komis;
+package carDealer;
 
 public class Car {
     String mark;

@@ -34,12 +34,16 @@
         </h:selectBooleanCheckbox>
 
         <br/>
-        Price from:<h:inputText value="#{Books.priceFrom}"/>
-        <h:selectBooleanCheckbox value="#{Books.priceFrom}">
+        Price from:<h:inputText value="#{Books.priceFrom}">
+            <f:ajax execute="@this"/>
+        </h:inputText>
+        <h:selectBooleanCheckbox value="#{Books.priceFromCheckBox}">
             <f:ajax execute="@this"/>
         </h:selectBooleanCheckbox>
         <br/>
-        Price to:<h:inputText value="#{Books.priceTo}"/>
+        Price to:<h:inputText value="#{Books.priceTo}">
+            <f:ajax execute="@this"/>
+        </h:inputText>
         <h:selectBooleanCheckbox value="#{Books.priceToCheckBox}">
             <f:ajax execute="@this"/>
         </h:selectBooleanCheckbox>
@@ -74,11 +78,24 @@
                     <td>#{book.author}</td>
                     <td>#{book.type}</td>
                     <td>#{book.price}</td>
-                    <td>#{book.currency}</td>
+                    <td>
+                        ${book.currency ne 'PLN'}
+                        <c:choose>
+                            <c:when test="${book.currency ne 'PLN'}">
+                                <h:selectOneMenu>
+                                    <f:selectItem itemValue="#{book.currency}"/>
+                                    <f:selectItem itemValue="PLN"/>
+                                </h:selectOneMenu>
+                            </c:when>
+                            <c:otherwise>
+                                #{book.currency}
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
                     <td>#{book.pages}</td>
                     <td>
                         <h:commandButton value="+">
-                            <f:ajax listener="#{Books.addToCart(book)}" render="@cart"/>
+                            <f:ajax listener="#{Books.addToCart(book)}" render="@all"/>
                         </h:commandButton>
                     </td>
                 </tr>
@@ -113,7 +130,7 @@
                     <td>#{book.pages}</td>
                     <td>
                         <h:commandButton value="-">
-                            <f:ajax listener="#{Books.removeFromCart(book)}"/>
+                            <f:ajax listener="#{Books.removeFromCart(book)}" render="@all"/>
                         </h:commandButton>
                     </td>
                 </tr>
