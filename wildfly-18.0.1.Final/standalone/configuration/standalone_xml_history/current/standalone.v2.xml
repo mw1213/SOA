@@ -528,8 +528,8 @@
         </outbound-socket-binding>
     </socket-binding-group>
     <deployments>
-        <deployment name="lab3_SOA_jsf_war_exploded.war" runtime-name="lab3_SOA_jsf_war_exploded.war" enabled="false">
-            <fs-exploded path="/home/maciej/Pulpit/SOA/lab3_SOA_jsf/out/artifacts/lab3_SOA_jsf_war_exploded.war"/>
+        <deployment name="SOA_lab4_ejb_ejb_exploded.rar" runtime-name="SOA_lab4_ejb_ejb_exploded.rar" enabled="false">
+            <fs-exploded path="/home/maciej/Pulpit/SOA/SOA_lab4_ejb/out/artifacts/SOA_lab4_ejb_ejb_exploded.rar"/>
         </deployment>
     </deployments>
 </server>

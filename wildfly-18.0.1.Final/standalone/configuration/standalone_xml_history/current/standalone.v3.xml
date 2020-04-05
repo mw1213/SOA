@@ -527,9 +527,4 @@
             <remote-destination host="localhost" port="25"/>
         </outbound-socket-binding>
     </socket-binding-group>
-    <deployments>
-        <deployment name="lab3_SOA_jsf_war_exploded.war" runtime-name="lab3_SOA_jsf_war_exploded.war">
-            <fs-exploded path="/home/maciej/Pulpit/SOA/lab3_SOA_jsf/out/artifacts/lab3_SOA_jsf_war_exploded.war"/>
-        </deployment>
-    </deployments>
 </server>

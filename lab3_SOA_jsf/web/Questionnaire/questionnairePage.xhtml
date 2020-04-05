@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+>
+
+<h:head>
+    <title>Questionnaire</title>
+</h:head>
+<h:body>
+    <h:form>
+        Name:
+        <h:inputText value="#{Questionnaire.name}" required="true">
+            <f:ajax execute="@this"/>
+        </h:inputText>
+        <br/>
+
+        Email:
+        <h:inputText value="#{Questionnaire.email}" required="true">
+            <f:validateRegex pattern="[A-Za-z0-9._+-]{0,}@[A-Za-z0-9.-]{0,}\.[A-Za-z]{2,6}" />
+            <f:ajax execute="@this"/>
+        </h:inputText>
+        <br/>
+        Age:
+        <h:inputText value="#{Questionnaire.age}" required="true">
+            <f:ajax execute="@this"/>
+            <f:validateLongRange minimum="10" maximum="100"/>
+        </h:inputText>
+        <br/>
+        Gender:
+        <h:selectOneMenu value="#{Questionnaire.gender}">
+            <f:selectItem itemLabel="Select gender" itemValue="-1"/>
+            <f:selectItem itemValue="Female"></f:selectItem>
+            <f:selectItem itemValue="Male"></f:selectItem>
+            <f:ajax listener="#{Questionnaire.renderAdditionalQuestions}" render="@all"></f:ajax>
+        </h:selectOneMenu>
+        <br/>
+        Education:
+        <h:selectOneMenu value="#{Questionnaire.education}">
+            <f:selectItem itemValue="Low"/>
+            <f:selectItem itemValue="Medium"/>
+            <f:selectItem itemValue="High"/>
+        </h:selectOneMenu>
+        <br/>
+
+        Height:
+        <h:inputText value="#{Questionnaire.height}" rendered="#{Questionnaire.subviewM}">
+            <f:ajax execute="@this"/>
+            <f:validateDoubleRange minimum="165" maximum="200"/>
+        </h:inputText>
+        <h:inputText value="#{Questionnaire.height}" rendered="#{Questionnaire.subviewW}">
+            <f:ajax execute="@this"/>
+            <f:validateDoubleRange minimum="150" maximum="185"/>
+        </h:inputText>
+        <br/>
+
+        <h:form id="womenSite" rendered="#{Questionnaire.subviewW}">
+            Beast Circumference:
+            <h:inputText value="#{Questionnaire.breastCircumference}">
+                <f:ajax execute="@this"/>
+            </h:inputText>
+            <br/>
+
+            Cup size:
+            <h:inputText value="#{Questionnaire.cupSize}">
+                <f:ajax execute="@this"/>
+            </h:inputText>
+            <br/>
+
+            Waist:
+            <h:inputText value="#{Questionnaire.waist}">
+                <f:ajax execute="@this"/>
+            </h:inputText>
+            <br/>
+
+            Hips:
+            <h:inputText value="#{Questionnaire.hips}">
+                <f:ajax execute="@this"/>
+            </h:inputText>
+            <br/>
+        </h:form>
+
+        <h:form id="menSite" rendered="#{Questionnaire.subviewM}">
+            Chest:
+            <h:inputText value="#{Questionnaire.chest}">
+                <f:ajax execute="@this"/>
+            </h:inputText>
+            <br/>
+            Belt:
+            <h:inputText value="#{Questionnaire.belt}">
+                <f:ajax execute="@this"/>
+            </h:inputText>
+            <br/>
+        </h:form>
+    </h:form>
+    <h:commandButton value="Submit">
+        <f:ajax listener="#{Questionnaire.submitData}" render="@all"/>
+    </h:commandButton>
+    <br/>
+    <h:form rendered="#{Questionnaire.dataSubmitted}">
+        How much do you spend on clothes every month?<br/>
+        <h:selectOneMenu value="#{Questionnaire.spendingMonthly}">
+            <f:selectItem itemLabel="up to 100" itemValue="-100"/>
+            <f:selectItem itemLabel="100-500" itemValue="-500"/>
+            <f:selectItem itemLabel="500-1000" itemValue="-1000"/>
+            <f:selectItem itemLabel="over 1000" itemValue="+1000"/>
+        </h:selectOneMenu>
+        <br/>
+        How often do you go shopping for clothes?<br/>
+        <h:selectOneMenu value="#{Questionnaire.spendingFrequency}">
+            <f:selectItem itemValue="everyday"/>
+            <f:selectItem itemValue="once a week"/>
+            <f:selectItem itemValue="once a mounth"/>
+            <f:selectItem itemValue="few times in a year"/>
+        </h:selectOneMenu>
+        <br/>
+        What colors do you preffer?<br/>
+        <h:selectManyListbox value="#{Questionnaire.preferedColors}">
+            <f:selectItem itemValue="Colorful and bright"/>
+            <f:selectItem itemValue="Toned in grays"/>
+            <f:selectItem itemValue="In black and white"/>
+            <f:selectItem itemValue="In black only"/>
+        </h:selectManyListbox>
+        <br/>
+        What kind of clothing do you prefer?<br/>
+        <h:selectManyListbox value="#{Questionnaire.preferedKind}" rendered="#{Questionnaire.subviewW}">
+            <f:selectItem itemValue="Suits"/>
+            <f:selectItem itemValue="Blouses"/>
+            <f:selectItem itemValue="Skirts"/>
+            <f:selectItem itemValue="Pants"/>
+        </h:selectManyListbox>
+        <h:selectManyListbox value="#{Questionnaire.preferedKind}" rendered="#{Questionnaire.subviewM}">
+            <f:selectItem itemValue="Pants"/>
+            <f:selectItem itemValue="Shorts"/>
+            <f:selectItem itemValue="Suits"/>
+            <f:selectItem itemValue="Shirts"/>
+            <f:selectItem itemValue="Ties"/>
+        </h:selectManyListbox>
+        <br/>
+    </h:form>
+
+</h:body>
+
+</html>

@@ -527,4 +527,9 @@
             <remote-destination host="localhost" port="25"/>
         </outbound-socket-binding>
     </socket-binding-group>
+    <deployments>
+        <deployment name="SOA_lab4_ejb_war_exploded.war" runtime-name="SOA_lab4_ejb_war_exploded.war">
+            <fs-exploded path="/home/maciej/Pulpit/SOA/SOA_lab4_ejb/out/artifacts/SOA_lab4_ejb_war_exploded.war"/>
+        </deployment>
+    </deployments>
 </server>
