@@ -11,6 +11,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,6 +58,7 @@ public class NBPConnector {
         Double exchangeRateFrom = exchangeRate(from);
         Double exchangeRateTo = exchangeRate(to);
         Double result = howMuch*exchangeRateFrom/exchangeRateTo;
+        result = Math.floor(result * 100) / 100;
         return result;
     }
 

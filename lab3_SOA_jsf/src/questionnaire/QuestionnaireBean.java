@@ -2,7 +2,7 @@ package questionnaire;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import java.util.List;
+import java.util.*;
 
 @ManagedBean( name = "Questionnaire")
 @SessionScoped
@@ -23,11 +23,41 @@ public class QuestionnaireBean {
     String buyingFrequency;
     String preferredColors;
     String preferredKindOfClothing;
-    Boolean subviewW=false, subviewM=false, dataSubmitted=false;
+    Boolean subviewW=false, subviewM=false, dataSubmitted=false, formSubmitted=false;
+    List<String> formData = new ArrayList<>();
     String spendingMonthly;
     String spendingFrequency;
     List<String> preferedColors;
     List<String> preferedKind;
+
+    Integer bannerClicks = 0;
+    public void incrementClicks(){
+        bannerClicks +=1;
+    }
+
+    public void setBannerClicks(Integer bannerClicks) {
+        this.bannerClicks = bannerClicks;
+    }
+
+    public Integer getBannerClicks() {
+        return bannerClicks;
+    }
+
+    public void setFormSubmitted(Boolean formSubmitted) {
+        this.formSubmitted = formSubmitted;
+    }
+
+    public void setFormData(List<String> formData) {
+        this.formData = formData;
+    }
+
+    public Boolean getFormSubmitted() {
+        return formSubmitted;
+    }
+
+    public List<String> getFormData() {
+        return formData;
+    }
 
     public void setDataSubmitted(Boolean dataSubmitted) {
         this.dataSubmitted = dataSubmitted;
@@ -229,5 +259,41 @@ public class QuestionnaireBean {
 
     public void submitData(){
         dataSubmitted = true;
+    }
+
+    public void sendForm() {
+        formSubmitted = true;
+
+        if(!formData.isEmpty()){
+            formData.clear();
+        }
+        formData.add("Name "+ getName());
+        formData.add("Email "+getEmail());
+        formData.add("Age "+ getAge().toString());
+        formData.add("Gender "+ getGender());
+        formData.add("Education "+ getEducation());
+        formData.add("Height "+ getHeight().toString());
+        if(subviewW){
+            formData.add("BreastSize "+ getBreastCircumference());
+            formData.add("CupSize "+ getCupSize());
+            formData.add("Waist "+ getWaist());
+            formData.add("Hips "+ getHips());
+        }
+        if(subviewM){
+            formData.add("Chest "+ getChest());
+            formData.add("Belt "+ getBelt());
+        }
+        formData.add("SpendingValue "+ getSpendingMonthly());
+        formData.add("SpendingFrequency "+ getSpendingFrequency());
+        int i=1;
+        for (String color: getPreferedColors()) {
+            formData.add("Color " + i + " "+color);
+            i++;
+        }
+        i=1;
+        for (String kind: getPreferedKind()){
+            formData.add("Kind"+ i +" " + kind);
+            i++;
+        }
     }
 }

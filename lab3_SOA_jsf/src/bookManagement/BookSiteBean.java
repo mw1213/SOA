@@ -16,8 +16,67 @@ public class BookSiteBean {
     List<Book> cart = new ArrayList<>();
     List<String> authors = booksDataSet.getAuthors();
     String title, author, type, priceFrom, priceTo, currency, pages;
-    Boolean titleCheckBox=false, authorCheckBox=false, typeCheckBox=false, priceFromCheckBox=false, priceToCheckBox=false,
-            currencyCheckBox=false, pagesCheckBox=false;
+    Boolean titleCheckBox=false, authorCheckBox=false, typeCheckBox=false, priceFromCheckBox=false,
+            priceToCheckBox=false, currencyCheckBox=false, pagesCheckBox=false;
+
+    Boolean showTitle=true, showAuthor=true, showType=true, showPrice=true, showCurrency=true,
+            showPages=true, showPlnPrice=true;
+
+    public void setShowPlnPrice(Boolean showPlnPrice) {
+        this.showPlnPrice = showPlnPrice;
+    }
+
+    public Boolean getShowPlnPrice() {
+        return showPlnPrice;
+    }
+
+    public void setShowTitle(Boolean showTitle) {
+        this.showTitle = showTitle;
+    }
+
+    public void setShowAuthor(Boolean showAuthor) {
+        this.showAuthor = showAuthor;
+    }
+
+    public void setShowType(Boolean showType) {
+        this.showType = showType;
+    }
+
+    public void setShowPrice(Boolean showPrice) {
+        this.showPrice = showPrice;
+    }
+
+    public void setShowCurrency(Boolean showCurrency) {
+        this.showCurrency = showCurrency;
+    }
+
+    public void setShowPages(Boolean showPages) {
+        this.showPages = showPages;
+    }
+
+    public Boolean getShowTitle() {
+        return showTitle;
+    }
+
+    public Boolean getShowAuthor() {
+        return showAuthor;
+    }
+
+    public Boolean getShowType() {
+        return showType;
+    }
+
+    public Boolean getShowPrice() {
+        return showPrice;
+    }
+
+    public Boolean getShowCurrency() {
+        return showCurrency;
+    }
+
+    public Boolean getShowPages() {
+        return showPages;
+    }
 
     public void setCart(List<Book> cart) {
         this.cart = cart;
@@ -194,5 +253,34 @@ public class BookSiteBean {
         } catch (Exception e){
         }
     }
+    Double price;
+    int numberOfBooks;
 
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public void setNumberOfBooks(int numberOfBooks) {
+        this.numberOfBooks = numberOfBooks;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public int getNumberOfBooks() {
+        return numberOfBooks;
+    }
+
+    public void checkout() {
+        price = 0.0;
+        numberOfBooks = 0;
+        if (!cart.isEmpty()){
+            for (Book book : cart) {
+                price += book.getPlnPrice();
+                numberOfBooks++;
+            }
+        cart.clear();
+       }
+    }
 }

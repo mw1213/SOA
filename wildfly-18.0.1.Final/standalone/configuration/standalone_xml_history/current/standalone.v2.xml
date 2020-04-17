@@ -158,6 +158,23 @@
                         <password>sa</password>
                     </security>
                 </datasource>
+                <datasource jndi-name="java:/postgresds" pool-name="postgresds">
+                    <connection-url>jdbc:postgresql://localhost:5432/postgresdb?serverTimezone=UTC</connection-url>
+                    <driver-class>org.postgresql.Driver</driver-class>
+                    <connection-property name="url">
+                        jdbc:postgresql://localhost:5432/postgresdb?serverTimezone=UTC
+                    </connection-property>
+                    <driver>postgresql-42.2.5.jar</driver>
+                    <security>
+                        <user-name>postgres</user-name>
+                        <password>postgres</password>
+                    </security>
+                    <validation>
+                        <valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLValidConnectionChecker"/>
+                        <background-validation>true</background-validation>
+                        <exception-sorter class-name="org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLExceptionSorter"/>
+                    </validation>
+                </datasource>
                 <drivers>
                     <driver name="h2" module="com.h2database.h2">
                         <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
@@ -192,7 +209,6 @@
                     <managed-scheduled-executor-service name="default" jndi-name="java:jboss/ee/concurrency/scheduler/default" context-service="default" hung-task-threshold="60000" keepalive-time="3000"/>
                 </managed-scheduled-executor-services>
             </concurrent>
-            <default-bindings context-service="java:jboss/ee/concurrency/context/default" datasource="java:jboss/datasources/ExampleDS" managed-executor-service="java:jboss/ee/concurrency/executor/default" managed-scheduled-executor-service="java:jboss/ee/concurrency/scheduler/default" managed-thread-factory="java:jboss/ee/concurrency/factory/default"/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:ee-security:1.0"/>
         <subsystem xmlns="urn:jboss:domain:ejb3:6.0">
@@ -528,8 +544,11 @@
         </outbound-socket-binding>
     </socket-binding-group>
     <deployments>
-        <deployment name="SOA_lab4_ejb_ejb_exploded.rar" runtime-name="SOA_lab4_ejb_ejb_exploded.rar" enabled="false">
-            <fs-exploded path="/home/maciej/Pulpit/SOA/SOA_lab4_ejb/out/artifacts/SOA_lab4_ejb_ejb_exploded.rar"/>
+        <deployment name="postgresql" runtime-name="postgresql-42.2.5.jar">
+            <content sha1="951b7eda125f3137538a94e2cbdcf744088ad4c2"/>
+        </deployment>
+        <deployment name="SOA_lab5__war_exploded" runtime-name="SOA_lab5__war_exploded.war" enabled="false">
+            <fs-exploded path="/home/maciej/Pulpit/SOA/SOA_lab5_JPA/out/artifacts/SOA_lab5__war_exploded"/>
         </deployment>
     </deployments>
 </server>

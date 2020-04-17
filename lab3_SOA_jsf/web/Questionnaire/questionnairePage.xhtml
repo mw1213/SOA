@@ -7,7 +7,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
+
 >
 
 <h:head>
@@ -46,6 +46,7 @@
             <f:selectItem itemValue="Low"/>
             <f:selectItem itemValue="Medium"/>
             <f:selectItem itemValue="High"/>
+            <f:ajax execute="@this"/>
         </h:selectOneMenu>
         <br/>
 
@@ -106,18 +107,22 @@
     <h:form rendered="#{Questionnaire.dataSubmitted}">
         How much do you spend on clothes every month?<br/>
         <h:selectOneMenu value="#{Questionnaire.spendingMonthly}">
+            <f:selectItem itemLabel="Select range" itemValue="-1"/>
             <f:selectItem itemLabel="up to 100" itemValue="-100"/>
             <f:selectItem itemLabel="100-500" itemValue="-500"/>
             <f:selectItem itemLabel="500-1000" itemValue="-1000"/>
             <f:selectItem itemLabel="over 1000" itemValue="+1000"/>
+            <f:ajax execute="@this"/>
         </h:selectOneMenu>
         <br/>
         How often do you go shopping for clothes?<br/>
         <h:selectOneMenu value="#{Questionnaire.spendingFrequency}">
+            <f:selectItem itemLabel="Select frequency" itemValue="-1"/>
             <f:selectItem itemValue="everyday"/>
             <f:selectItem itemValue="once a week"/>
             <f:selectItem itemValue="once a mounth"/>
             <f:selectItem itemValue="few times in a year"/>
+            <f:ajax execute="@this"/>
         </h:selectOneMenu>
         <br/>
         What colors do you preffer?<br/>
@@ -126,6 +131,7 @@
             <f:selectItem itemValue="Toned in grays"/>
             <f:selectItem itemValue="In black and white"/>
             <f:selectItem itemValue="In black only"/>
+            <f:ajax execute="@this"/>
         </h:selectManyListbox>
         <br/>
         What kind of clothing do you prefer?<br/>
@@ -134,6 +140,7 @@
             <f:selectItem itemValue="Blouses"/>
             <f:selectItem itemValue="Skirts"/>
             <f:selectItem itemValue="Pants"/>
+            <f:ajax execute="@this"/>
         </h:selectManyListbox>
         <h:selectManyListbox value="#{Questionnaire.preferedKind}" rendered="#{Questionnaire.subviewM}">
             <f:selectItem itemValue="Pants"/>
@@ -141,10 +148,28 @@
             <f:selectItem itemValue="Suits"/>
             <f:selectItem itemValue="Shirts"/>
             <f:selectItem itemValue="Ties"/>
+            <f:ajax execute="@this"/>
         </h:selectManyListbox>
         <br/>
+        <h:commandButton value="Submit">
+            <f:ajax listener="#{Questionnaire.sendForm}" render="@all"/>
+        </h:commandButton>
     </h:form>
 
+    <h:commandLink action="#{Questionnaire.incrementClicks}">
+        <h:graphicImage url="resources/banner.png">
+        </h:graphicImage><br/>
+        <f:ajax render="clicks"/>
+    </h:commandLink>
+
+    <h:outputText value="Clicks: #{Questionnaire.bannerClicks}" id="clicks">
+    </h:outputText>
+
+
+    <ui:repeat value="#{Questionnaire.formData}" var="questionare">
+        "#{questionare}"
+        <br/>
+    </ui:repeat>
 </h:body>
 
 </html>

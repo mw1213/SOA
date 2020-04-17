@@ -14,6 +14,7 @@
     <title>BooksManagement</title>
 </h:head>
 <h:body>
+    Check the box if want to filter on category:<br/>
     <h:form>
         <h:selectOneMenu value="#{Books.author}">
             <f:selectItem itemLabel="Select Author" itemValue="-1" />
@@ -53,20 +54,90 @@
             <f:ajax execute="@this"/>
         </h:selectBooleanCheckbox>
         <br/>
+        Pick categories to show:<br/>
+        <table class="order-table" id="showInTable">
+        <thead>
+        <tr>
+            <th class="order-table-header" scope="col">Title</th>
+            <th class="order-table-header" scope="col">Author</th>
+            <th class="order-table-header" scope="col">Type</th>
+            <th class="order-table-header" scope="col">Currency</th>
+            <th class="order-table-header" scope="col">Price</th>
+            <th class="order-table-header" scope="col">Polish price</th>
+            <th class="order-table-header" scope="col">Pages</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <h:selectBooleanCheckbox value="#{Books.showTitle}">
+                        <f:ajax execute="@this"/>
+                    </h:selectBooleanCheckbox>
+                </td>
+                <td>
+                    <h:selectBooleanCheckbox value="#{Books.showAuthor}">
+                        <f:ajax execute="@this"/>
+                    </h:selectBooleanCheckbox>
+                </td>
+                <td>
+                    <h:selectBooleanCheckbox value="#{Books.showType}">
+                        <f:ajax execute="@this"/>
+                    </h:selectBooleanCheckbox>
+                </td>
+                <td>
+                    <h:selectBooleanCheckbox value="#{Books.showCurrency}">
+                        <f:ajax execute="@this"/>
+                    </h:selectBooleanCheckbox>
+                </td>
+                <td>
+                    <h:selectBooleanCheckbox value="#{Books.showPrice}">
+                        <f:ajax execute="@this"/>
+                    </h:selectBooleanCheckbox>
+                </td>
+                <td>
+                    <h:selectBooleanCheckbox value="#{Books.showPlnPrice}">
+                        <f:ajax execute="@this"/>
+                    </h:selectBooleanCheckbox>
+                </td>
+                <td>
+                    <h:selectBooleanCheckbox value="#{Books.showPages}">
+                        <f:ajax execute="@this"/>
+                    </h:selectBooleanCheckbox>
+                </td>
+            </tr>
+        </tbody>
+        </table>
         <h:commandButton value="Filter">
             <f:ajax render="@all" listener="#{Books.filterBooks}"/>
         </h:commandButton>
+
+        <br/>
 
         <table class="order-table" id="table">
 
             <thead>
             <tr>
-                <th class="order-table-header" scope="col">Title</th>
+                <c:if test="#{Books.showTitle eq true}">
+                    <th class="order-table-header" scope="col">Title</th>
+                </c:if>
+                <c:if test="#{Books.showAuthor eq true}">
                 <th class="order-table-header" scope="col">Author</th>
+                </c:if>
+                <c:if test="#{Books.showType eq true}">
                 <th class="order-table-header" scope="col">Type</th>
-                <th class="order-table-header" scope="col">Price</th>
+                </c:if>
+                <c:if test="#{Books.showCurrency eq true}">
                 <th class="order-table-header" scope="col">Currency</th>
+                </c:if>
+                <c:if test="#{Books.showPrice eq true}">
+                <th class="order-table-header" scope="col">Price</th>
+                </c:if>
+                <c:if test="#{Books.showPlnPrice eq true}">
+                <th class="order-table-header" scope="col">Polish price</th>
+                </c:if>
+                <c:if test="#{Books.showPages eq true}">
                 <th class="order-table-header" scope="col">Pages</th>
+                </c:if>
                 <th class="order-table-header" scope="col">Add to cart</th>
             </tr>
             </thead>
@@ -74,25 +145,27 @@
             <tbody>
             <ui:repeat value="#{Books.choosenBooks}" var="book">
                 <tr>
+                    <c:if test="#{Books.showTitle eq true}">
                     <td>#{book.title}</td>
+                    </c:if>
+                    <c:if test="#{Books.showAuthor eq true}">
                     <td>#{book.author}</td>
+                    </c:if>
+                    <c:if test="#{Books.showType eq true}">
                     <td>#{book.type}</td>
+                    </c:if>
+                    <c:if test="#{Books.showCurrency eq true}">
+                    <td>#{book.currency}</td>
+                    </c:if>
+                    <c:if test="#{Books.showPrice eq true}">
                     <td>#{book.price}</td>
-                    <td>
-                        ${book.currency ne 'PLN'}
-                        <c:choose>
-                            <c:when test="${book.currency ne 'PLN'}">
-                                <h:selectOneMenu>
-                                    <f:selectItem itemValue="#{book.currency}"/>
-                                    <f:selectItem itemValue="PLN"/>
-                                </h:selectOneMenu>
-                            </c:when>
-                            <c:otherwise>
-                                #{book.currency}
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
+                    </c:if>
+                    <c:if test="#{Books.showPlnPrice eq true}">
+                    <td>#{book.plnPrice}</td>
+                    </c:if>
+                    <c:if test="#{Books.showPages eq true}">
                     <td>#{book.pages}</td>
+                    </c:if>
                     <td>
                         <h:commandButton value="+">
                             <f:ajax listener="#{Books.addToCart(book)}" render="@all"/>
@@ -102,9 +175,11 @@
             </ui:repeat>
             </tbody>
         </table>
-
-        <br/>        <br/>        <br/>
-        CART<br/>
+        <br/><br/>
+        <h:commandButton value="Checkout">
+            <f:ajax listener="#{Books.checkout}" render="@all"/>
+        </h:commandButton>
+        <br/>CART<br/>
         <table class="order-table" id="cart">
 
             <thead>
@@ -138,5 +213,12 @@
             </tbody>
         </table>
     </h:form>
+    <br/>
+    Your last buy: <br/>
+    Price [in PLN]:#{Books.price} <br/>
+    Quantity:#{Books.numberOfBooks}
+
+
+
 </h:body>
 </html>
