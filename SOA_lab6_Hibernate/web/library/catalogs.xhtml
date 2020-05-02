@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core" xml:lang="en" lang="en"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <title>Catalog</title>
+</h:head>
+<h:body>
+    <a href="index.xhtml">RETURN</a><br/>
+
+    <h:form>
+        <table class="order-table" id="table">
+            <thead>
+            <tr>
+                <th class="order-table-header" scope="col">Book</th>
+                <th class="order-table-header" scope="col">Author</th>
+                <th class="order-table-header" scope="col">Name</th>
+                <th class="order-table-header" scope="col">Quantity</th>
+                <th class="order-table-header" scope="col">Aviable</th>
+                <th class="order-table-header" scope="col">Delete</th>
+                <th class="order-table-header" scope="col">Edit</th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            <ui:repeat value="#{Manager.catalog}" var="catalog">
+
+                <tr>
+                    <td>#{catalog.book.title}</td>
+                    <td>#{catalog.book.author.surname}</td>
+                    <td>#{catalog.book.author.name}</td>
+                    <td>#{catalog.quantity}</td>
+                    <td>#{catalog.available}</td>
+                    <td>
+                        <h:commandButton value="delete">
+                            <f:ajax listener="#{Manager.deleteCatalog(catalog)}" render="@all"/>
+                        </h:commandButton>
+                    </td>
+
+                    <td>
+                        <h:commandButton value="edit">
+                            <f:ajax listener="#{Manager.editCatalog(catalog)}" render="@all"/>
+                        </h:commandButton>
+                    </td>
+                </tr>
+            </ui:repeat>
+            </tbody>
+        </table>
+    </h:form>
+    <br/>
+
+    <h:form rendered="#{Manager.catalogEdit}">
+        <table class="order-table" id="edittable">
+            <thead>
+            <tr>
+                <th class="order-table-header" scope="col">Quantity</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <h:inputText binding="#{new_quantity}">
+                            <f:ajax event="blur"/>
+                        </h:inputText>
+                    </td>
+                    <td>
+                        <h:commandButton value="commit">
+                            <f:ajax listener="#{Manager.editCatalogQuantity(new_quantity.value)}" render="@all"/>
+                        </h:commandButton>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </h:form>
+
+
+
+
+    <h:form>
+        <table class="order-table">
+            <thead>
+            <tr>
+                <th class="order-table-header" scope="col">Author</th>
+                <th class="order-table-header" scope="col">From date (MM/dd/yyyy)</th>
+                <th class="order-table-header" scope="col">To date (MM/dd/yyyy)</th>
+                <th class="order-table-header" scope="col">Search</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <h:selectOneMenu binding="#{authorIn}" required="true">
+                        <f:selectItem itemLabel="Select Author" itemValue="-1" />
+                        <f:selectItems value="#{Manager.authors}" var="author" itemLabel="#{author}" itemValue="#{author.id}"/>
+                        <f:ajax execute="@this"/>
+                    </h:selectOneMenu>
+                </td>
+                <td>
+                    <h:inputText binding="#{datefrom}">
+                        <f:ajax event="blur"/>
+                        <f:convertDateTime pattern="MM/dd/yyyy" type="date" />
+                    </h:inputText>
+                </td>
+                <td>
+                    <h:inputText binding="#{dateto}">
+                        <f:ajax event="blur"/>
+                        <f:convertDateTime pattern="MM/dd/yyyy" type="date" />
+                    </h:inputText>
+                </td>
+                <td>
+                    <h:commandButton value="commit">
+                        <f:ajax listener="#{Manager.findFromAuthor(authorIn.value, datefrom.value, dateto.value)}" render="queryResult"/>
+                    </h:commandButton>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </h:form>
+    <br/>
+    <h:form>
+        <table class="order-table">
+            <thead>
+            <tr>
+                <th class="order-table-header" scope="col">Book</th>
+                <th class="order-table-header" scope="col">From date (MM/dd/yyyy)</th>
+                <th class="order-table-header" scope="col">To date (MM/dd/yyyy)</th>
+                <th class="order-table-header" scope="col">Search</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <h:selectOneMenu binding="#{bookIn}" required="true">
+                        <f:selectItem itemLabel="Select Book" itemValue="-1" />
+                        <f:selectItems value="#{Manager.books}" var="book" itemLabel="#{book}" itemValue="#{book.id}"/>
+                        <f:ajax execute="@this"/>
+                    </h:selectOneMenu>
+                </td>
+                <td>
+                    <h:inputText binding="#{datefrom2}">
+                        <f:ajax event="blur"/>
+                        <f:convertDateTime pattern="MM/dd/yyyy" type="date" />
+                    </h:inputText>
+                </td>
+                <td>
+                    <h:inputText binding="#{dateto2}">
+                        <f:ajax event="blur"/>
+                        <f:convertDateTime pattern="MM/dd/yyyy" type="date" />
+                    </h:inputText>
+                </td>
+                <td>
+                    <h:commandButton value="commit">
+                        <f:ajax listener="#{Manager.findFromBook(bookIn.value, datefrom2.value, dateto2.value)}" render="queryResult"/>
+                    </h:commandButton>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </h:form>
+    <br/>
+    <h:form>
+        <table class="order-table">
+            <thead>
+            <tr>
+                <th class="order-table-header" scope="col">Reader</th>
+                <th class="order-table-header" scope="col">From date (MM/dd/yyyy)</th>
+                <th class="order-table-header" scope="col">To date (MM/dd/yyyy)</th>
+                <th class="order-table-header" scope="col">Search</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <h:selectOneMenu binding="#{readerIn}" required="true">
+                        <f:selectItem itemLabel="Select Reader" itemValue="-1" />
+                        <f:selectItems value="#{Manager.readers}" var="reader" itemLabel="#{reader}" itemValue="#{reader.id}"/>
+                        <f:ajax execute="@this"/>
+                    </h:selectOneMenu>
+                </td>
+                <td>
+                    <h:inputText binding="#{datefrom3}">
+                        <f:ajax event="blur"/>
+                        <f:convertDateTime pattern="MM/dd/yyyy" type="date" />
+                    </h:inputText>
+                </td>
+                <td>
+                    <h:inputText binding="#{dateto3}">
+                        <f:ajax event="blur"/>
+                        <f:convertDateTime pattern="MM/dd/yyyy" type="date" />
+                    </h:inputText>
+                </td>
+                <td>
+                    <h:commandButton value="commit">
+                        <f:ajax listener="#{Manager.findFromReaders(readerIn.value, datefrom3.value, dateto3.value)}" render="queryResult"/>
+                    </h:commandButton>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </h:form>
+
+    <h:commandButton value="Biggest author">
+        <f:ajax listener="#{Manager.findBiggestAuthor}" render="queryResult"/>
+    </h:commandButton>
+    <br/>
+    <h:form>
+        Your own query:<br/>
+        [e.g. NO PARAMS: SELECT DISTINCT r FROM Reader r, BooksBorrowing b WHERE b.reader.id = r.id AND b.book.author.surname = 'Homer']<br/>
+        [e.g. WITH PARAM: "title", {"Kapitan Nemo", String}: SELECT c FROM Catalog c, Book b WHERE b.title = :title AND b.catalog.id = c.id]<br/>
+        <h:inputTextarea rows="4" cols="120" binding="#{queryText}">
+            <f:ajax event="blur"/>
+        </h:inputTextarea>
+        <br/>
+        Your parameters (name, value, type):<br/>
+        <h:inputText binding="#{paramName}">
+            <f:ajax event="blur"/>
+        </h:inputText>
+        <h:inputText binding="#{paramValue}">
+            <f:ajax event="blur"/>
+        </h:inputText>
+        <h:selectOneMenu binding="#{type}" required="true">
+            <f:selectItem itemLabel="Select type" itemValue="-1" />
+            <f:selectItem itemLabel="Long" itemValue="Long" />
+            <f:selectItem itemLabel="String" itemValue="String" />
+            <f:selectItem itemLabel="Date" itemValue="Date" />
+            <f:ajax execute="@this"/>
+        </h:selectOneMenu>
+        <h:commandButton value="add parameter">
+            <f:ajax listener="#{Manager.addParameter(type.value, paramName.value, paramValue.value)}" render="parameters"/>
+        </h:commandButton>
+        <br/>
+    <h:panelGroup id="parameters">
+        Parameters:
+        #{Manager.stringsParameters}
+        #{Manager.longParameters}
+        #{Manager.dateParameters}
+    </h:panelGroup>
+        <br/>
+        <h:commandButton value="execute query">
+            <f:ajax listener="#{Manager.createQuery(queryText.value)}" render="queryResult"/>
+        </h:commandButton>
+    </h:form>
+    <br/>
+    Last query result:
+    <br/>
+    <h:outputText id="queryResult" value="#{Manager.lastQueryResult}"></h:outputText>
+</h:body>
+</html>

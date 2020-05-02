@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xml:lang="en" lang="en"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <title>Books</title>
+</h:head>
+<h:body>
+    <a href="index.xhtml">RETURN</a><br/>
+
+    <h:form>
+    <h3>ADD Book</h3>
+    <table class="order-table" id="addbook">
+        <thead>
+        <tr>
+            <th class="order-table-header" scope="col">Title</th>
+            <th class="order-table-header" scope="col">ISBN</th>
+            <th class="order-table-header" scope="col">Author's name</th>
+            <th class="order-table-header" scope="col">Surname</th>
+            <th class="order-table-header" scope="col">Category</th>
+            <th class="order-table-header" scope="col">Quantity</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <h:inputText binding="#{title}" >
+                    <f:ajax execute="@this" event="blur"/>
+                </h:inputText>
+            </td>
+            <td>
+                <h:inputText binding="#{isbn}">
+                    <f:ajax event="blur"/>
+                </h:inputText>
+            </td>
+            <td>
+                <h:inputText binding="#{name}">
+                    <f:ajax event="blur"/>
+                </h:inputText>
+            </td>
+            <td>
+                <h:inputText binding="#{surname}">
+                    <f:ajax event="blur"/>
+                </h:inputText>
+            </td>
+            <td>
+                <h:inputText binding="#{category}">
+                    <f:ajax event="blur"/>
+                </h:inputText>
+            </td>
+            <td>
+                <h:inputText binding="#{quantity}" value="0">
+                    <f:ajax event="blur"/>
+                </h:inputText>
+            </td>
+            <td>
+                <h:commandButton value="add book" action="#{Manager.addBook(title.value, isbn.value, name.value, surname.value, category.value, quantity.value)}">
+                    <f:ajax execute="@this" render="@all"/>
+                </h:commandButton>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</h:form>
+<br/>
+    <table class="order-table" id="table">
+        <thead>
+        <tr>
+            <th class="order-table-header" scope="col">ID</th>
+            <th class="order-table-header" scope="col">Title</th>
+            <th class="order-table-header" scope="col">ISBN</th>
+            <th class="order-table-header" scope="col">Author's name</th>
+            <th class="order-table-header" scope="col">Author's surname</th>
+            <th class="order-table-header" scope="col">Category</th>
+            <th class="order-table-header" scope="col">Aviable</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <ui:repeat value="#{Manager.books}" var="book">
+            <tr>
+                <td>#{book.id}</td>
+                <td>#{book.title}</td>
+                <td>#{book.ISBNNumber}</td>
+                <td>#{book.author.surname}</td>
+                <td>#{book.author.name}</td>
+                <td>#{book.category.name}</td>
+                <td>#{book.catalog.available}</td>
+
+            </tr>
+        </ui:repeat>
+        </tbody>
+    </table>
+
+</h:body>
+</html>

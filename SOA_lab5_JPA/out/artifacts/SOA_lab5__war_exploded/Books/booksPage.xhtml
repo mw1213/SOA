@@ -15,6 +15,7 @@
     </h:head>
     <h:body>
     <h:form>
+        <h3>CREATE</h3>
         <table class="order-table" id="addbook">
             <thead>
             <tr>
@@ -70,6 +71,8 @@
         </table>
     </h:form>
     <br/>
+        <h3>READ and DELETE</h3>
+
         <table class="order-table" id="table">
             <thead>
             <tr>
@@ -110,6 +113,7 @@
         </table>
 
         <h:form rendered="#{BookSite.renderUpdate}">
+            <h3>UPDATE</h3>
             <table class="order-table" id="updateBook">
                 <thead>
                 <tr>
