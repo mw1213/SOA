@@ -34,6 +34,7 @@
                 <td>
                     <h:commandButton value="add author" action="#{Manager.addAuthor(name.value, surname.value)}">
                         <f:ajax execute="@this" render="@all"/>
+                        <f:ajax listener="#{LibraryPublisher.sendMessage('author', 'New author: '.concat(name.value).concat(' ').concat(surname.value))}"/>
                     </h:commandButton>
                 </td>
             </tr>

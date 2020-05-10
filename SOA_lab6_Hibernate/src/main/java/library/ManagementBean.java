@@ -16,8 +16,26 @@ import java.util.*;
 public class ManagementBean {
     EntityManagerFactory factory = Persistence.createEntityManagerFactory("Hibernate-Zajecia");
     EntityManager em = factory.createEntityManager();
+    private boolean lastOperation = false;
+    private boolean canBorrow = true;
 
     Date today = new Date();
+
+    public boolean isCanBorrow() {
+        return canBorrow;
+    }
+
+    public void setCanBorrow(boolean canBorrow) {
+        this.canBorrow = canBorrow;
+    }
+
+    public boolean isLastOperation() {
+        return lastOperation;
+    }
+
+    public void setLastOperation(boolean lastOperation) {
+        this.lastOperation = lastOperation;
+    }
 
     public Date getToday() {
         return today;
@@ -94,7 +112,7 @@ public class ManagementBean {
         }
     }
 
-    public void addReader(String name, String surname){
+    public void addReader(String name, String surname, Boolean notifications){
         try {
             String jpql = "SELECT a FROM Reader a WHERE a.name = :name AND a.surname = :surname";
             Query query = em.createQuery(jpql);
@@ -104,7 +122,7 @@ public class ManagementBean {
 
             em.getTransaction().begin();
             if (readers.isEmpty()){
-                Reader reader = new Reader(name, surname);
+                Reader reader = new Reader(name, surname, notifications);
                 em.persist(reader);
             }
             em.getTransaction().commit();
@@ -168,9 +186,16 @@ public class ManagementBean {
             em.getTransaction().begin();
             if (catalogs.isEmpty()){
                 System.out.println("nie ma takiej możliwości");
+                setLastOperation(false);
+                setCanBorrow(false);
             }
             else{
-                if (catalogs.get(0).getAvailable()>0){
+                if (catalogs.get(0).getAvailable()<=0){
+                    System.out.println("nie można wypożyczyć");
+                    setLastOperation(false);
+                    setCanBorrow(false);
+                }
+                else {
                     BooksBorrowing booksBorrowing = new BooksBorrowing(date, returnDate);
                     booksBorrowing.setBook(book);
                     booksBorrowing.setCatalog(catalogs.get(0));
@@ -180,9 +205,8 @@ public class ManagementBean {
                         booksBorrowing.catalog.borrowBook();
                     }
                     em.persist(booksBorrowing);
-                }
-                else {
-                    System.out.println("nie można wypożyczyć");
+                    setLastOperation(true);
+                    setCanBorrow(true);
                 }
             }
             em.getTransaction().commit();
@@ -190,6 +214,12 @@ public class ManagementBean {
         catch (Exception e){
             System.err.println("Blad przy wczytywaniu rekordu: " + e);
         }
+    }
+    public boolean canBorrowBook(boolean book_av){
+        if (canBorrow || book_av){
+            return true;
+        }
+        return false;
     }
 
     public void addBorrowing(int bookId, int readerId, String dateIn){
@@ -221,9 +251,16 @@ public class ManagementBean {
             em.getTransaction().begin();
             if (catalogs.isEmpty()){
                 System.out.println("nie ma takiej możliwości");
+                setLastOperation(false);
+                setCanBorrow(false);
             }
             else{
-                if (catalogs.get(0).getAvailable()>0){
+                if (catalogs.get(0).getAvailable()<=0){
+                    System.out.println("nie można wypożyczyć");
+                    setLastOperation(false);
+                    setCanBorrow(false);
+                }
+                else {
                     BooksBorrowing booksBorrowing = new BooksBorrowing(date, returnDate);
                     booksBorrowing.setBook(book);
                     booksBorrowing.setCatalog(catalogs.get(0));
@@ -233,9 +270,8 @@ public class ManagementBean {
                         booksBorrowing.catalog.borrowBook();
                     }
                     em.persist(booksBorrowing);
-                }
-                else {
-                    System.out.println("nie można wypożyczyć");
+                    setLastOperation(true);
+                    setCanBorrow(true);
                 }
             }
 
@@ -257,7 +293,12 @@ public class ManagementBean {
             em.getTransaction().begin();
             booksBorrowing.catalog.returnBook();
             booksBorrowing.setToDate(today);
+            booksBorrowing.getBook().setCanBorrow(true);
             em.getTransaction().commit();
+            setLastOperation(true);
+        }
+        else {
+            setLastOperation(false);
         }
     }
 

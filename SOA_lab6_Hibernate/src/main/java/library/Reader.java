@@ -9,6 +9,7 @@ public class Reader {
     private int id;
     String name;
     String surname;
+    Boolean notifications;
     private List<BooksBorrowing> booksBorrowing;
 
     public Reader() {
@@ -17,6 +18,12 @@ public class Reader {
     public Reader(String name, String surname) {
         this.name = name;
         this.surname = surname;
+    }
+
+    public Reader(String name, String surname, Boolean notifications) {
+        this.name = name;
+        this.surname = surname;
+        this.notifications = notifications;
     }
 
     @OneToMany(mappedBy = "reader")
@@ -51,9 +58,18 @@ public class Reader {
         this.surname = surname;
     }
 
+    @Column(name = "notifications", nullable = false)
+    public Boolean getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(Boolean notifications) {
+        this.notifications = notifications;
+    }
+
     @Override
     public String toString() {
-        return "Reader: "+ name + ' '+ surname;
+        return "Reader: "+ name + ' '+ surname + ' ' + id;
     }
 }
 

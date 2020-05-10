@@ -14,12 +14,14 @@ public class Book {
     private Category category;
     private Catalog catalog;
     private List<BooksBorrowing> booksBorrowing;
+    private Boolean canBorrow;
 
     public Book() { super(); }
     public Book(String title, BigInteger ISBNNumber) {
         super();
         this.title=title;
         this.ISBNNumber=ISBNNumber;
+        canBorrow=true;
     }
 
     @Id
@@ -62,6 +64,15 @@ public class Book {
     @ManyToOne(fetch = FetchType.LAZY)
     public Author getAuthor() { return author; }
     public void setAuthor(Author author) { this.author = author; }
+
+    @Column(name="canBorrow", nullable = false)
+    public Boolean getCanBorrow() {
+        return canBorrow;
+    }
+
+    public void setCanBorrow(Boolean canBorrow) {
+        this.canBorrow = canBorrow;
+    }
 
     @Override
     public String toString() {

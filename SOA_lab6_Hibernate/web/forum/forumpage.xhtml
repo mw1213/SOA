@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xml:lang="en" lang="en">
+<h:head>
+    <title>Title</title>
+</h:head>
+<h:body>
+
+    <h:form>
+        <h:commandButton action="#{QueueSender.sendMessage('QUEUE TEST')}" value="SEND"/>
+    </h:form>
+
+    <h:form>
+        <h:commandButton action="#{QueueReceiver.receiveMessage()}" value="Receive"/>
+    </h:form>
+
+    <h:form>
+        <h:commandButton action="#{TopicPublisher.sendMessage('TOPIC TEST')}" value="SEND TOPIC"/>
+    </h:form>
+
+    <h:form>
+        <h:commandButton action="#{TopicReceiver.receiveMessage()}" value="Receive TOPIC"/>
+    </h:form>
+        Logged as: #{ForumUser.user}
+    <h:form>
+        <h:inputText binding="#{username}">
+            <f:ajax event="blur"/>
+        </h:inputText>
+        <h:commandButton action="#{ForumUser.login(username.value)}" value="LOGIN">
+            <f:ajax render="@all"/>
+        </h:commandButton>
+
+    </h:form>
+    <h:form>
+        <h:inputText binding="#{forumTopic}">
+            <f:ajax event="blur"/>
+        </h:inputText>
+        <h:commandButton action="#{ForumUser.addSubscription(forumTopic.value)}" value="ADD Topic to subscriptions">
+            <f:ajax render="@all"/>
+        </h:commandButton>
+
+    </h:form>
+    <h:form>
+        <h:inputText binding="#{newTopic}">
+            <f:ajax event="blur"/>
+        </h:inputText>
+        <h:commandButton action="#{ForumUser.addForumTopic(newTopic.value)}" value="ADD Topic to forum">
+            <f:ajax render="@all"/>
+        </h:commandButton>
+
+    </h:form>
+    <h:form>
+        <br/>Forum:<h:inputText binding="#{forumName}">
+            <f:ajax event="blur"/>
+        </h:inputText>
+        <br/>Text:<h:inputText binding="#{msgText}">
+        <f:ajax event="blur"/>
+    </h:inputText>
+        <h:commandButton action="#{ForumPublisher.sendMessage(forumName.value, msgText.value)}" value="SEND FORUM"/>
+    </h:form>
+    <br/>
+
+
+    <h:form>
+        <h:commandButton action="#{ForumUser.loadMessages}" value="Load Messages"/>
+    </h:form>
+    <br/>
+
+
+    <table class="order-table" id="table">
+        <thead>
+        <tr>
+            <th class="order-table-header" scope="col">Notifications</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <ui:repeat value="#{ForumUser.myNotificationsList}" var="notification">
+            <tr>
+                <td>#{notification}</td>
+            </tr>
+        </ui:repeat>
+
+        </tbody>
+    </table>
+    <br/>
+    <table class="order-table" id="table2">
+        <thead>
+        <tr>
+            <th class="order-table-header" scope="col">MySubscriptions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <ui:repeat value="#{ForumUser.subscribedTopics}" var="notification">
+            <tr>
+                <td>#{notification}</td>
+            </tr>
+        </ui:repeat>
+
+        </tbody>
+    </table>
+</h:body>
+</html>

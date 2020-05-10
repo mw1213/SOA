@@ -3,7 +3,8 @@
         PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xml:lang="en" lang="en">
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" xml:lang="en" lang="en">
 <h:head>
     <title>BookBorrowings</title>
 </h:head>
@@ -60,7 +61,8 @@
 
                 <td>
                     <h:commandButton value="add borrowing" action="#{Manager.addBorrowing(readername.value, readersurname.value, title.value, name.value, surname.value, date.value)}">
-                        <f:ajax execute="@this" render="@all"/>
+                        <f:actionListener binding="#{LibraryPublisher.sendMessage('borrowing', 'New borrowing: '.concat(title.value).concat(' ').concat(readersutname.value).concat(' ').concat(readername.value))}"/>
+                        <f:ajax render="@all"/>
                     </h:commandButton>
                 </td>
             </tr>
@@ -70,7 +72,7 @@
 
     <h:form>
         <h3>ADD BookBorrowing</h3>
-        <table class="order-table" id="addbook">
+        <table class="order-table" id="addbook2">
             <thead>
             <tr>
                 <th class="order-table-header" scope="col">Book ID</th>
@@ -99,7 +101,8 @@
 
                 <td>
                     <h:commandButton value="add borrowing" action="#{Manager.addBorrowing(book_id.value, reader_id.value, date2.value)}">
-                        <f:ajax execute="@this" render="@all"/>
+                        <f:actionListener binding="#{LibraryPublisher.sendMessage('borrowing', 'New borrowing: '.concat(book_id.value).concat(' ').concat(reader_id.value).concat(' ').concat(date2.value))}"/>
+                        <f:ajax render="@all"/>
                     </h:commandButton>
                 </td>
             </tr>
@@ -135,8 +138,11 @@
                 <td>#{borrowing.fromDate}</td>
                 <td>#{borrowing.toDate}</td>
                 <td>
-                    <h:commandButton value="return book">
-                        <f:ajax listener="#{Manager.returnBorrowing(borrowing)}" render="@all"/>
+                    <h:commandButton value="return book" action="#{Manager.returnBorrowing(borrowing)}">
+                        <f:ajax render="@all"/>
+                        <c:if test="#{Manager.lastOperation}">
+                            <f:actionListener binding="#{LibraryPublisher.sendMessage(borrowing.catalog.id, 'Return: '.concat(borrowing.book.title).concat(' ').concat(borrowing.toDate))}"/>
+                        </c:if>
                     </h:commandButton>
                 </td>
 

@@ -2,11 +2,12 @@
 <!DOCTYPE html
         PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xml:lang="en" lang="en">
+<h:head>
     <title>Library of books</title>
-</head>
-<body>
+</h:head>
+<h:body>
     Logic for queries in CATALOG
     <br/>
     <a href="books.xhtml">BOOK</a><br/>
@@ -15,6 +16,21 @@
     <a href="categories.xhtml">CATEGORY</a><br/>
     <a href="borrowings.xhtml">BORROWING</a><br/>
     <a href="catalogs.xhtml">GO TO CATALOG</a><br/>
+    <a href="notifications.xhtml" >GO TO NOTIFICATIONS</a><br/>
 
-</body>
+    <h:form>
+        <h:commandButton value="loadReaders">
+            <f:actionListener binding="#{NotificationReader.addReaders(Manager.readers)}"/>
+        </h:commandButton>
+    </h:form>
+
+    <h:form>
+        <h:selectOneMenu value="#{NotificationReader.user}" required="true">
+            <f:selectItem itemLabel="Select Reader" itemValue="-1" />
+            <f:selectItems value="#{Manager.readers}" var="reader" itemLabel="#{reader}" itemValue="#{reader.id}"/>
+            <f:ajax execute="@this"/>
+        </h:selectOneMenu>
+    </h:form>
+
+</h:body>
 </html>

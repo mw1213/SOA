@@ -22,7 +22,7 @@
                 <th class="order-table-header" scope="col">Aviable</th>
                 <th class="order-table-header" scope="col">Delete</th>
                 <th class="order-table-header" scope="col">Edit</th>
-
+                <th class="order-table-header" scope="col">Borrow</th>
             </tr>
             </thead>
             <tbody>
@@ -44,6 +44,30 @@
                     <td>
                         <h:commandButton value="edit">
                             <f:ajax listener="#{Manager.editCatalog(catalog)}" render="@all"/>
+                        </h:commandButton>
+                    </td>
+                    <td>
+                        <ui:param name="user" value="#{NotificationReader.user}" />
+                        <ui:param name="date" value="#{Manager.today}" />
+                        <ui:param name="canBorrow" value="#{catalog.book.canBorrow}" />
+                        <h:commandButton value="borrow"  action="#{Manager.addBorrowing(catalog.book.id, user, date)}">
+                            <c:if test="#{Manager.canBorrowBook(catalog.book.canBorrow)}">
+                                <f:actionListener binding="#{LibraryPublisher.sendMessage('borrowing', 'New borrowing: '.concat(catalog.book.id).concat(' ').concat(user).concat(' ').concat(date))}"/>
+                            </c:if>
+                            <c:if test="#{!Manager.canBorrowBook(catalog.book.canBorrow)}">
+                                <f:actionListener binding="#{NotificationReader.addUserSubscriptions(catalog.id)}"/>
+                            </c:if>
+                            <f:ajax render="@all"/>
+                        </h:commandButton>
+                    </td>
+                    <td>
+                        <h:commandButton value="add to subscriptions"  action="#{NotificationReader.addUserSubscriptions(catalog.id)}">
+                            <f:ajax render="@all"/>
+                        </h:commandButton>
+                    </td>
+                    <td>
+                        <h:commandButton value="remove from subscriptions"  action="#{NotificationReader.removeUserSubscriptions(catalog.id)}">
+                            <f:ajax render="@all"/>
                         </h:commandButton>
                     </td>
                 </tr>

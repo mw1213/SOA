@@ -27,9 +27,9 @@ public class AddData {
                     "Jan", "Kochanowski", "Fraszki", "2");
 
 
-            managementBean.addReader("Jan", "Kowalski");
-            managementBean.addReader("Maria", "Nowak");
-            managementBean.addReader("Tadeusz", "Pudzianowski");
+            managementBean.addReader("Jan", "Kowalski", true);
+            managementBean.addReader("Maria", "Nowak", true);
+            managementBean.addReader("Tadeusz", "Pudzianowski", false);
             List<Reader> readers = managementBean.getReaders();
             List<Book> books = managementBean.getBooks();
 

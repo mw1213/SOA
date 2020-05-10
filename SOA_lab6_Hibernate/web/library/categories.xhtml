@@ -28,6 +28,7 @@
                 <td>
                     <h:commandButton value="add category" action="#{Manager.addCategory(name.value)}">
                         <f:ajax execute="@this" render="@all"/>
+                        <f:ajax listener="#{LibraryPublisher.sendMessage('category', 'New category: '.concat(name.value))}"/>
                     </h:commandButton>
                 </td>
             </tr>

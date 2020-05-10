@@ -17,6 +17,7 @@
             <tr>
                 <th class="order-table-header" scope="col">Reader's name</th>
                 <th class="order-table-header" scope="col">Surname</th>
+                <th class="order-table-header" scope="col">Notify me</th>
             </tr>
             </thead>
             <tbody>
@@ -32,8 +33,14 @@
                     </h:inputText>
                 </td>
                 <td>
-                    <h:commandButton value="add reader" action="#{Manager.addReader(name.value, surname.value)}">
+                    <h:selectBooleanCheckbox binding="#{wantNotifications}">
+                        <f:ajax event="blur"/>
+                    </h:selectBooleanCheckbox>
+                </td>
+                <td>
+                    <h:commandButton value="add reader" action="#{Manager.addReader(name.value, surname.value, wantNotifications.value)}">
                         <f:ajax execute="@this" render="@all"/>
+                        <f:ajax listener="#{LibraryPublisher.sendMessage('reader', 'New reader: '.concat(name.value).concat(' ').concat(surname.value))}"/>
                     </h:commandButton>
                 </td>
             </tr>
